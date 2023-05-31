@@ -1,6 +1,6 @@
 <template>
-
-  <h1 >MY DATABASE CE</h1>
+  <img class = "image" src = "https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/database-icon.png">
+  <h1 >MyDatabaseCE</h1>
   <h1 >Login Page </h1>
   <div class = "card">
 
@@ -64,6 +64,9 @@ h1{
   text-align: center;
   padding-bottom: 1.5rem;
   padding-top: 1.5rem;
+}
+.image{
+  max-width: 10%;
 }
 .card{
   max-width: 30%;
