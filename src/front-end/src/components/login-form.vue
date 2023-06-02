@@ -24,11 +24,12 @@
 
     </div>
   </div>
-
 </template>
 
 <script>
 import axios from "axios";
+import router from "@/router";
+
 
 export default {
   name:'loginform',
@@ -45,9 +46,13 @@ export default {
         password: this.passwordFieldValue
       })
           .then((response) => {
-            alert("Text sent successfully!");
+
+              alert(response.data);
+
             // Handle the response from the backend if needed
-          })
+          }).then(
+              router.push('/error')
+      )
           .catch((error) => {
             console.error("Error sending text:", error);
             // Handle the error if needed

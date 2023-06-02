@@ -1,16 +1,15 @@
 <template>
-
-  <loginform/>
-
+  <router-view></router-view>
 </template>
 
 <script>
 import loginform from './components/login-form.vue'
-
+import error from './components/error.vue'
 export default {
   name: 'App',
   components: {
-    loginform
+    loginform,
+    error
   }
 }
 </script>
