@@ -1,24 +1,24 @@
 <template>
-  <img class = "image" src = "https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/database-icon.png">
-  <h1 >MyDatabaseCE</h1>
-  <h1 >Login Page </h1>
-  <div class = "card">
+  <img class="image" src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/database-icon.png">
+  <h1>MyDatabaseCE</h1>
+  <h1>Login Page </h1>
+  <div class="card">
 
-  <div class = "container-fluid">
+    <div class="container-fluid">
 
       <form>
         <div class="mb-3">
-          <label for="exampleInputEmail1" class = "form-label">Username</label>
-          <input type="text" class = "form-control" v-model="textFieldValue" placeholder="Enter Username">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" class="form-control" v-model="textFieldValue" placeholder="Enter Username">
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class = "form-label" >Password</label>
+          <label for="exampleInputPassword1" class="form-label">Password</label>
           <input type="password" class="form-control" v-model="passwordFieldValue" id="exampleInputPassword1"
                  placeholder="Password">
         </div>
-        <div class = "mb-3">
+        <div class="mb-3">
 
-        <button type="submit" @click="sendText" class="btn btn-primary">Submit</button>
+          <button type="submit" @click="sendText" class="btn btn-primary">Submit</button>
         </div>
       </form>
 
@@ -30,7 +30,7 @@
 import axios from "axios";
 
 export default {
-  name:'loginform',
+  name: 'login-form',
   data() {
     return {
       textFieldValue: "",
@@ -40,16 +40,16 @@ export default {
   methods: {
     sendText() {
       axios.post("api/messages/login", {
-        username: this.textFieldValue ,
+        username: this.textFieldValue,
         password: this.passwordFieldValue
       })
           .then((response) => {
 
-            alert(response.data);
+                alert(response.data);
 
-            // Handle the response from the backend if needed
-          }
-      )
+                // Handle the response from the backend if needed
+              }
+          )
           .catch((error) => {
             console.error("Error sending text:", error);
             // Handle the error if needed
@@ -62,18 +62,20 @@ export default {
 
 <style scoped>
 
-h1{
+h1 {
   text-align: center;
   padding-bottom: 1.5rem;
   padding-top: 1.5rem;
 }
-.image{
+
+.image {
   max-width: 10%;
 }
-.card{
+
+.card {
   max-width: 30%;
 
   padding: 10px 10px;
-  margin:auto;
+  margin: auto;
 }
 </style>

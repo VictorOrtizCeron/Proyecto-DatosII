@@ -1,21 +1,22 @@
 <template>
 
-  <h1>database view </h1>
+  <sidebar></sidebar>
+  <query-input></query-input>
+  <tableOutput></tableOutput>
 
-  <div class = "row">
-
-    <div class = "col">
-      <div class="input-group">
-        <span class="input-group-text">With textarea</span>
-        <textarea class="form-control" aria-label="With textarea"></textarea>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
+
+import Sidebar from "@/components/sidebar.vue";
+
+import QueryInput from "@/components/queryInput.vue";
+import tableOutput from "@/components/table-output.vue";
+
+
 export default {
   name: 'databaseView',
+  components: {QueryInput, Sidebar, tableOutput },
 
 }
 </script>
