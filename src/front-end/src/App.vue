@@ -1,15 +1,19 @@
 <template>
-  <router-view></router-view>
+
+  <router-view/>
 </template>
 
 <script>
-import loginform from './components/login-form.vue'
-import error from './components/error.vue'
+
+import error from '@/components/error.vue'
+import databaseView from '@/components/database-view.vue';
+import loginForm from "@/components/login-form.vue";
 export default {
   name: 'App',
   components: {
-    loginform,
-    error
+    loginForm ,
+    error,
+    databaseView
   }
 }
 </script>

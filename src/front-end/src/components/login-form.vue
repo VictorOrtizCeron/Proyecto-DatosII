@@ -28,8 +28,6 @@
 
 <script>
 import axios from "axios";
-import router from "@/router";
-
 
 export default {
   name:'loginform',
@@ -47,11 +45,10 @@ export default {
       })
           .then((response) => {
 
-              alert(response.data);
+            alert(response.data);
 
             // Handle the response from the backend if needed
-          }).then(
-              router.push('/error')
+          }
       )
           .catch((error) => {
             console.error("Error sending text:", error);
