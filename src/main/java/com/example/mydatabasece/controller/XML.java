@@ -47,7 +47,7 @@ public class XML {
     public void XML_Reader(){
         Huffman huf = new Huffman();
         try {
-            File inputFile = new File("C:\\Users\\eemma\\OneDrive\\Escritorio\\demo\\src\\main\\java\\com\\example\\demo\\data.xml");
+            File inputFile = new File("com/example/mydatabasece/assets/data.xml");
 
             // Crear una instancia del DocumentBuilder
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

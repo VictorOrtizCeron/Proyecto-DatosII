@@ -13,11 +13,15 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/messages")
 
-public class MessageController {
+public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<String> helloPost(@RequestBody TextRequest  request){
         System.out.println(request.getUsername());
         System.out.println(request.getPassword());
+
+
+
+
 
         if (Objects.equals(request.getPassword(), "Ranita15")){
             return ResponseEntity.ok("Password is correct");

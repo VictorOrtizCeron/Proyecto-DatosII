@@ -9,7 +9,7 @@
 
       </a>
       <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
-              aria-controls="offcanvasScrolling">Enable body scrolling
+              aria-controls="offcanvasScrolling">XML Store
       </button>
 
     </div>

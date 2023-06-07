@@ -69,6 +69,7 @@ h1 {
 }
 
 .image {
+  margin-top: 30px;
   max-width: 10%;
 }
 
