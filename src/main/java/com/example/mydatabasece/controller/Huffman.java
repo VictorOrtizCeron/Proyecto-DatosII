@@ -50,6 +50,7 @@ public class Huffman {
             decode(lista_passwords.get(i), huffmanTable);
             if (Objects.equals(username, lista_users.get(i)) && Objects.equals(password, decoded_str)){
                 value = true;
+
                 nose.nose();
                 break;
             }

@@ -12,6 +12,7 @@ public class XML {
     private String username;
     private String password;
 
+    public boolean value;
     public void setUsername(String username){
         this.username = username;
     }
@@ -54,9 +55,13 @@ public class XML {
         }
     }
     public void XML_Reader(){
+        String dir = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\main\\" +
+                "java\\com\\example\\mydatabasece\\assets\\data.xml";
         Huffman huf = new Huffman();
         try {
-            File inputFile = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\assets\\data.xml");
+            File inputFile =
+                    new File(
+                            dir);
 
             // Crear una instancia del DocumentBuilder
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -92,5 +97,6 @@ public class XML {
         huf.setPassword(password);
         huf.setUsername(username);
         huf.check();
+        this.value = huf.value;
     }
 }

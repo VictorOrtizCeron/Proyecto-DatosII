@@ -28,8 +28,9 @@ public class LoginController {
         xml_Reader.setUsername(request.username);
         xml_Reader.XML_Reader();
 
-        System.out.println(value);
-        if (value){
+
+        if (xml_Reader.value){
+            System.out.println("SI ENTRA LMAO");
             return ResponseEntity.ok("Funciono");
         }
         else {
