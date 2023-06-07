@@ -28,6 +28,7 @@
 
 <script>
 import axios from "axios";
+import router from "@/router";
 
 export default {
   name: 'login-form',
@@ -46,6 +47,9 @@ export default {
           .then((response) => {
 
                 alert(response.data);
+                if (response.data === "Funciono"){
+                  router.push('/database');
+                }
 
                 // Handle the response from the backend if needed
               }

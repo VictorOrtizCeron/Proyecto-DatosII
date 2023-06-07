@@ -16,15 +16,12 @@ import java.util.Objects;
 public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<String> helloPost(@RequestBody TextRequest  request){
+
         System.out.println(request.getUsername());
         System.out.println(request.getPassword());
 
-
-
-
-
-        if (Objects.equals(request.getPassword(), "Ranita15")){
-            return ResponseEntity.ok("Password is correct");
+        if (Objects.equals(request.getPassword(), "12") && Objects.equals(request.getUsername(), "123")){
+            return ResponseEntity.ok("Funciono");
         }
         else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
