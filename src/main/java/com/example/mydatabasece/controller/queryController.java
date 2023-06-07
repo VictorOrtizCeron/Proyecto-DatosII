@@ -12,22 +12,22 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/database")
 public class queryController {
-    @PostMapping("/table")
-    ResponseEntity<String> queryPost(@RequestBody queryRequest request) {
+            @PostMapping("/table")
+            ResponseEntity<String> queryPost(@RequestBody queryRequest request) {
 
-        System.out.println(request.getQuery());
+                System.out.println(request.getQuery());
 
 
-        return ResponseEntity.ok("Query received in backend");
+                return ResponseEntity.ok("Query received in backend");
 
-    }
+            }
 
-    public static class queryRequest {
-        private String query;
+            public static class queryRequest {
+                private String query;
 
-        public String getQuery() {
-            return query;
-        }
+                public String getQuery() {
+                    return query;
+                }
 
 
     }

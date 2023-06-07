@@ -1,7 +1,7 @@
 <template>
 
   <sidebar></sidebar>
-  <query-input></query-input>
+
   <tableOutput></tableOutput>
 
 </template>
