@@ -28,7 +28,8 @@
 
 <script>
 import axios from "axios";
-import router from "@/router";
+import databaseView from "@/components/database-view.vue";
+
 
 export default {
   name: 'login-form',
@@ -46,10 +47,12 @@ export default {
       })
           .then((response) => {
 
-                alert(response.data);
+
                 if (response.data === "Funciono"){
-                  router.push('/database');
+
+                  window.location.href = '/database';
                 }
+
 
                 // Handle the response from the backend if needed
               }
