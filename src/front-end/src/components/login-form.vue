@@ -28,6 +28,11 @@
 
 <script>
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import databaseView from "@/components/database-view.vue";
+
+>>>>>>> fe2693b97bccb56bf9bacfed26fb39ee6a9e19ae
 
 export default {
   name: 'login-form',
@@ -45,9 +50,16 @@ export default {
       })
           .then((response) => {
 
+<<<<<<< HEAD
                 if (response.data === "Funciono"){
+=======
+
+                if (response.data === "Funciono"){
+
+>>>>>>> fe2693b97bccb56bf9bacfed26fb39ee6a9e19ae
                   window.location.href = '/database';
                 }
+
 
                 // Handle the response from the backend if needed
               }

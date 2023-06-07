@@ -4,6 +4,7 @@ import {createRouter, createWebHistory} from "vue-router";
 import error from "@/components/error.vue";
 import databaseView from "@/components/database-view.vue";
 import loginForm from "@/components/login-form.vue";
+
 const routes=[
     {
         path:"/",
