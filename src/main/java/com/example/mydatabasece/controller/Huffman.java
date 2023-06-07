@@ -6,14 +6,21 @@ public class Huffman {
     Map<String, Character> huffmanTable = new HashMap<>();
     public String decoded_str;
     public int lenght;
-    boolean value;
-    public String Username;
-    public String Password;
-    String new_usrr;
-    String new_passs;
+    public boolean value;
     String data_translated;
+    private String username;
+    private String password;
+    public LoginController nose= new LoginController();
+
+    XML xml = new XML();
     List<String> lista_users = new ArrayList<>();
     List<String> lista_passwords = new ArrayList<>();
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public void setPassword(String password){
+        this.password = password;
+    }
     public  void decode(String compressedString, Map<String, Character> huffmanTable) {
         StringBuilder sb = new StringBuilder();
         String currentCode = "";
@@ -41,8 +48,9 @@ public class Huffman {
         huffmanTable.put("111111110", '9');
         for(int i = 0; i < lenght ; i++ ){
             decode(lista_passwords.get(i), huffmanTable);
-            if (Objects.equals(Username, lista_users.get(i)) && Objects.equals(Password, decoded_str)){
+            if (Objects.equals(username, lista_users.get(i)) && Objects.equals(password, decoded_str)){
                 value = true;
+                nose.nose();
                 break;
             }
             else{
@@ -50,6 +58,7 @@ public class Huffman {
             }
         }
         System.out.println(value);
+
     }
 
     public void translate_new_password(String data){

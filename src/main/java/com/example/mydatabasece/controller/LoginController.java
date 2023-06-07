@@ -14,19 +14,31 @@ import java.util.Objects;
 @RequestMapping("/api/messages")
 
 public class LoginController {
+
+    boolean value = false;
+    public void setValue(boolean value){
+        this.value = value;
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> helloPost(@RequestBody TextRequest  request){
 
-        System.out.println(request.getUsername());
-        System.out.println(request.getPassword());
+        XML xml_Reader = new XML();
+        xml_Reader.setPassword(request.password);
+        xml_Reader.setUsername(request.username);
+        xml_Reader.XML_Reader();
 
-        if (Objects.equals(request.getPassword(), "12") && Objects.equals(request.getUsername(), "123")){
+        System.out.println(value);
+        if (value){
             return ResponseEntity.ok("Funciono");
         }
         else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
 
+    }
+    public void nose(){
+        value = true;
     }
     public static class TextRequest {
         private String username;

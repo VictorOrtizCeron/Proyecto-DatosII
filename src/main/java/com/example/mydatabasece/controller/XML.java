@@ -9,6 +9,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 
 public class XML {
+    private String username;
+    private String password;
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public void setPassword(String password){
+        this.password = password;
+    }
     public static void writeToXML(String filePath, String newContent) {
         try {
             // Leer el contenido actual del archivo XML
@@ -47,7 +56,7 @@ public class XML {
     public void XML_Reader(){
         Huffman huf = new Huffman();
         try {
-            File inputFile = new File("com/example/mydatabasece/assets/data.xml");
+            File inputFile = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\assets\\data.xml");
 
             // Crear una instancia del DocumentBuilder
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -73,12 +82,15 @@ public class XML {
                 }
             }
             // Imprimir las listas
-            // System.out.println(lista_users);
-            //System.out.println(lista_passwords);
+            //System.out.println(huf.lista_users);
+            //System.out.println(huf.lista_passwords);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         huf.lenght = huf.lista_users.size();
+        huf.setPassword(password);
+        huf.setUsername(username);
         huf.check();
     }
 }
