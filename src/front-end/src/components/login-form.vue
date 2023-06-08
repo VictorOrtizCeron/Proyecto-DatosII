@@ -51,7 +51,7 @@ export default {
 
 
                 if (response.data === "Funciono") {
-
+                  //
                   window.location.href = '/database';
                 }
 
@@ -68,23 +68,11 @@ export default {
       axios.post("api/messages/register", {
         username: this.textFieldValue,
         password: this.passwordFieldValue
-      })
-          .then((response) => {
-
-
-                if (response.data === "Funciono") {
-
-                  window.location.href = '/database';
-                }
-
-              }
-              // Handle the response from the backend if needed
-
-          )
-          .catch((error) => {
-            console.error("Error sending text:", error);
-            // Handle the error if needed
-          });
+      }).then(
+          (response) => {
+            window.location.href = '/';
+          }
+      )
     }
 
   },

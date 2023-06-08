@@ -30,7 +30,7 @@ public class LoginController {
 
 
         if (xml_Reader.value){
-            System.out.println("SI ENTRA LMAO");
+
             return ResponseEntity.ok("Funciono");
         }
         else {
@@ -41,8 +41,20 @@ public class LoginController {
     //Post mapping para registrar nuevo usuario :)
     @PostMapping("/register")
     public ResponseEntity<String> registerPost(@RequestBody TextRequest  request){
-
         //métodos de escritura de usuario en xml
+        String dirXML = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\" +
+                "main\\java\\com\\example\\mydatabasece\\assets\\data.xml";
+
+        Huffman huf = new Huffman();
+
+        huf.translate_new_password(request.password);
+
+
+        String newAccount = "<linea>"+request.username+ ";" + huf.data_translated+ "</linea>";
+
+        XML.writeToXML(dirXML,newAccount);
+
+
 
         return ResponseEntity.ok("Funciono");
     }
