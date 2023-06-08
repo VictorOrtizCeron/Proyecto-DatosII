@@ -18,7 +18,8 @@
         </div>
         <div class="mb-3">
 
-          <button type="submit" @click="sendText" class="btn btn-primary">Submit</button>
+          <button type="submit" @click="sendText" class="btn btn-primary">Login</button>
+          <button type="submit" @click="sendRegistration" class="btn btn-outline-success">Sign in</button>
         </div>
       </form>
 
@@ -55,18 +56,39 @@ export default {
                 }
 
               }
-            // Handle the response from the backend if needed
+              // Handle the response from the backend if needed
 
           )
-          .
-            catch((error) => {
-              console.error("Error sending text:", error);
-              // Handle the error if needed
-            });
-          },
-
+          .catch((error) => {
+            console.error("Error sending text:", error);
+            // Handle the error if needed
+          });
     },
-  };
+    sendRegistration() {
+      axios.post("api/messages/register", {
+        username: this.textFieldValue,
+        password: this.passwordFieldValue
+      })
+          .then((response) => {
+
+
+                if (response.data === "Funciono") {
+
+                  window.location.href = '/database';
+                }
+
+              }
+              // Handle the response from the backend if needed
+
+          )
+          .catch((error) => {
+            console.error("Error sending text:", error);
+            // Handle the error if needed
+          });
+    }
+
+  },
+};
 </script>
 
 
@@ -88,5 +110,10 @@ h1 {
 
   padding: 10px 10px;
   margin: auto;
+}
+
+.btn {
+  margin: 10px;
+  width: 40%;
 }
 </style>

@@ -19,9 +19,9 @@ public class LoginController {
     public void setValue(boolean value){
         this.value = value;
     }
-
+    //post mapping para manejar login
     @PostMapping("/login")
-    public ResponseEntity<String> helloPost(@RequestBody TextRequest  request){
+    public ResponseEntity<String> loginPost(@RequestBody TextRequest  request){
 
         XML xml_Reader = new XML();
         xml_Reader.setPassword(request.password);
@@ -38,9 +38,15 @@ public class LoginController {
         }
 
     }
-    public void nose(){
-        value = true;
+    //Post mapping para registrar nuevo usuario :)
+    @PostMapping("/register")
+    public ResponseEntity<String> registerPost(@RequestBody TextRequest  request){
+
+        //métodos de escritura de usuario en xml
+
+        return ResponseEntity.ok("Funciono");
     }
+
     public static class TextRequest {
         private String username;
 
