@@ -37,9 +37,11 @@ public class LoginController {
 
         if (xml_Reader.value){
             SerialReader.success = 1;
+            morse = "";
             return ResponseEntity.ok("Funciono");
         }
         else {
+            morse = "";
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
 
