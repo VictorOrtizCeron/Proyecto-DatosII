@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.io.Serial;
 import java.util.Objects;
 
@@ -39,6 +40,7 @@ public class LoginController {
         if (xml_Reader.value){
             SerialReader.success = 1;
             morse = "";
+            queryController.user = request.username;
             return ResponseEntity.ok("Funciono");
         }
         else {
@@ -69,6 +71,13 @@ public class LoginController {
         String newAccount = "<linea>" + request.username + ";" + huf.data_translated + "</linea>";
         XML.writeToXML(dirXML,newAccount);
         morse = "";
+
+        String folder_path = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece" + "\\" +request.username;
+        File folder = new File(folder_path);
+        Boolean created = folder.mkdir();
+        if (created){
+            System.out.println("Se creo el folder");
+        }
 
         return ResponseEntity.ok("Funciono");
     }
