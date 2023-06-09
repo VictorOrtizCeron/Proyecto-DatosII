@@ -16,6 +16,7 @@ import java.util.Objects;
 public class LoginController {
 
     boolean value = false;
+    public static String morse = "";
     public void setValue(boolean value){
         this.value = value;
     }
@@ -24,13 +25,18 @@ public class LoginController {
     public ResponseEntity<String> loginPost(@RequestBody TextRequest  request){
 
         XML xml_Reader = new XML();
-        xml_Reader.setPassword(request.password);
+        if (!Objects.equals(request.password, "")) {
+            xml_Reader.setPassword(request.password);
+        }
+        else{
+            xml_Reader.setPassword(morse);
+        }
         xml_Reader.setUsername(request.username);
         xml_Reader.XML_Reader();
 
 
         if (xml_Reader.value){
-
+            SerialReader.success = 1;
             return ResponseEntity.ok("Funciono");
         }
         else {
@@ -42,19 +48,23 @@ public class LoginController {
     @PostMapping("/register")
     public ResponseEntity<String> registerPost(@RequestBody TextRequest  request){
         //métodos de escritura de usuario en xml
-        String dirXML = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\" +
-                "main\\java\\com\\example\\mydatabasece\\assets\\data.xml";
+        String dirXML = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\assets\\data.xml";
 
         Huffman huf = new Huffman();
 
-        huf.translate_new_password(request.password);
+        System.out.println(request.password);
 
+        if (!Objects.equals(request.password, "")) {
 
-        String newAccount = "<linea>"+request.username+ ";" + huf.data_translated+ "</linea>";
+            huf.translate_new_password(request.password);
+        }
+        else {
 
+            huf.translate_new_password(morse);
+        }
+        String newAccount = "<linea>" + request.username + ";" + huf.data_translated + "</linea>";
         XML.writeToXML(dirXML,newAccount);
-
-
+        morse = "";
 
         return ResponseEntity.ok("Funciono");
     }
