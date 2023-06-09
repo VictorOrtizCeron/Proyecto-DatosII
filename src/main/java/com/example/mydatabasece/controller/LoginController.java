@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serial;
 import java.util.Objects;
 
 @RestController
@@ -41,6 +42,7 @@ public class LoginController {
             return ResponseEntity.ok("Funciono");
         }
         else {
+            SerialReader.success = 2;
             morse = "";
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
