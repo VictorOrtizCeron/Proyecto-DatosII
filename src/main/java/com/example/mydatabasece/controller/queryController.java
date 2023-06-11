@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -26,14 +25,14 @@ import java.util.Objects;
 public class queryController {
     public static String user;
     @PostMapping("/table")
-    ResponseEntity<String> queryPost(@RequestBody queryRequest request) {
+    ResponseEntity<String> queryPost(@RequestBody queryRequest request) throws ParserConfigurationException, IOException, SAXException {
 
         System.out.println(request.getQuery());
 
         String[] palabras = request.getQuery().split(" ");
         if (Objects.equals(palabras[0], "DELETE")){
             if (Objects.equals(palabras[1], "FROM")){
-                System.out.println("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
+
                 File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
                 if (xml.exists()) {
                     if (xml.delete()) {
@@ -50,7 +49,33 @@ public class queryController {
             System.out.println("Seleccionado");
         }
         else if (Objects.equals(palabras[0], "INSERT") && Objects.equals(palabras[1], "INTO")){
-            System.out.println("Insertado");
+            File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
+            if (xml.exists()) {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+
+                Document document = builder.parse(xml);
+                NodeList nodo_principal = document.getElementsByTagName(palabras[2]);
+
+
+                for (int i = 0; i < nodo_principal.getLength(); i++) {
+                    Node nodo = nodo_principal.item(i);
+                    if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) nodo;
+                        NodeList hijos = element.getChildNodes();
+                        for (int j = 0; j < hijos.getLength(); j++) {
+                            Node hijo = hijos.item(j);
+                            if (hijo.getNodeType() == Node.ELEMENT_NODE) {
+                                Element eHijo = (Element) hijo;
+                                if (hijo.getNodeName().equals(palabras[3])) {
+                                    Text valor = document.createTextNode(palabras[5]);
+                                    eHijo.appendChild(valor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         else {
             System.out.println("Comando no encontrado");
