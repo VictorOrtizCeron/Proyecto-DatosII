@@ -8,9 +8,6 @@ import java.util.Scanner;
 
 public class SerialReader extends Thread{
     public static int success = 0;
-    public static int notSuccess = 0;
-    public static int delete = 0;
-
     @Override
     public void run() {
         SerialPort port = SerialPort.getCommPort("COM5");
