@@ -1,5 +1,6 @@
 package com.example.mydatabasece.controller;
 
+import com.fazecast.jSerialComm.SerialPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,31 @@ public class queryController {
 
         System.out.println(request.getQuery());
 
+        String[] palabras = request.getQuery().split(" ");
+        if (Objects.equals(palabras[0], "DELETE")){
+            if (Objects.equals(palabras[1], "FROM")){
+                System.out.println("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
+                File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
+                if (xml.exists()) {
+                    if (xml.delete()) {
+                        SerialReader.success = 3;
+                        System.out.println("Se ha borrado la tabla");
+                    }
+                }
+                else {
+                    System.out.println("La tabla no existe");
+                }
+            }
+        }
+        else if (Objects.equals(palabras[0], "SELECT")){
+            System.out.println("Seleccionado");
+        }
+        else if (Objects.equals(palabras[0], "INSERT") && Objects.equals(palabras[1], "INTO")){
+            System.out.println("Insertado");
+        }
+        else {
+            System.out.println("Comando no encontrado");
+        }
 
         return ResponseEntity.ok("Query received in backend");
 
@@ -46,9 +72,9 @@ public class queryController {
     @PostMapping("/create")
     ResponseEntity<String> queryPost(@RequestBody newTableRequest request) throws IOException, ParserConfigurationException, SAXException, TransformerException {
 
-        System.out.println(request.getNewTableColumns());
-
         String[] attributes = request.getNewTableColumns().split(",");
+
+        System.out.println(user);
 
         String filePath = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece" + "\\" + user + "\\" + request.newTableName + ".xml";
         File fil = new File(filePath);
