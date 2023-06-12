@@ -23,8 +23,8 @@ public class sidebarController {
 
         info.xmlStores  = new ArrayList<>();
 
-        String folderPath = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\main" +
-                "\\java\\com\\example\\mydatabasece\\"+ user; // Replace with the path of the folder you want to traverse
+        String folderPath = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\"
+                + user; // Replace with the path of the folder you want to traverse
         File folder = new File(folderPath);
         File[] files = folder.listFiles();
 

@@ -55,8 +55,8 @@ public class XML {
         }
     }
     public void XML_Reader(){
-        //String dir = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\assets\\data.xml";
-        String dir = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\main\\java\\com\\example\\mydatabasece\\assets\\data.xml";
+
+        String dir = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\assets\\data.xml";
         Huffman huf = new Huffman();
         try {
             File inputFile =

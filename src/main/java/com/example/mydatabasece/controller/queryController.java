@@ -24,177 +24,28 @@ import java.util.*;
 @RequestMapping("/api/database")
 public class queryController {
     public static String user;
+    String committ = "";
+    String[] commit;
     @PostMapping("/table")
     ResponseEntity<TableResponse> queryPost(@RequestBody queryRequest request) throws ParserConfigurationException, IOException, SAXException, TransformerException {
 
-        System.out.println(request.getQuery());
-        TableResponse tableJSON = new TableResponse(null,null);
+
+        committ = committ + "," + request.getQuery();
+        commit = committ.split(",");
+        System.out.println(commit[1] + "," + commit[2]);
+        List<String> headers = new ArrayList<>();
+        List<List<String>> items = new ArrayList<>();
+        TableResponse tableJSON = new TableResponse(headers,items);
         String[] palabras = request.getQuery().split(" ");
-        if (Objects.equals(palabras[0], "DELETE")){
-            if (Objects.equals(palabras[1], "FROM")){
-                if (Objects.equals(palabras[3],"WHERE")){
-                    File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
-                    if (xml.exists()) {
-                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                        DocumentBuilder builder = factory.newDocumentBuilder();
 
-                        Document document = builder.parse(xml);
-                        NodeList nodo_principal = document.getElementsByTagName(palabras[2]);
-
-
-                        for (int i = 0; i < nodo_principal.getLength(); i++) {
-                            Node nodo = nodo_principal.item(i);
-                            if (nodo.getNodeType() == Node.ELEMENT_NODE) {
-                                Element element = (Element) nodo;
-                                NodeList hijos = element.getChildNodes();
-                                for (int j = 0; j < hijos.getLength(); j++) {
-                                    Node hijo = hijos.item(j);
-                                    if (hijo.getNodeType() == Node.ELEMENT_NODE) {
-                                        String[] todo = palabras[4].split(",");
-                                        if (todo.length == 1){
-                                            if (hijo.getNodeName().equals(todo[0])) {
-                                                nodo.removeChild(hijo);
-                                                TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
-                                                Transformer transformer = transformerFactory1.newTransformer();
-                                                Source source = new DOMSource(document);
-                                                FileWriter fw = new FileWriter(xml);
-                                                PrintWriter pw = new PrintWriter(fw);
-                                                Result result = new StreamResult(pw);
-                                                transformer.transform(source, result);
-                                                SerialReader.success = 3;
-                                            }
-                                        }
-                                        else {
-                                            for (int k = 0; k < todo.length; k++) {
-                                                if (hijo.getNodeName().equals(todo[k])) {
-                                                    nodo.removeChild(hijo);
-                                                    TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
-                                                    Transformer transformer = transformerFactory1.newTransformer();
-                                                    Source source = new DOMSource(document);
-                                                    FileWriter fw = new FileWriter(xml);
-                                                    PrintWriter pw = new PrintWriter(fw);
-                                                    Result result = new StreamResult(pw);
-                                                    transformer.transform(source, result);
-                                                    SerialReader.success = 3;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else {
-                    File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
-                    if (xml.exists()) {
-                        if (xml.delete()) {
-                            SerialReader.success = 3;
-                            System.out.println("Se ha borrado la tabla");
-                        }
-                    } else {
-                        System.out.println("La tabla no existe");
-                    }
-                }
-            }
-        }
-        else if (Objects.equals(palabras[0], "SELECT")){
-            System.out.println("Seleccionado");
-            //String dir = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\" +
-           //         "src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[1] + ".xml";
-            String dir = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\main\\java\\com\\example\\mydatabasece\\"
+        if (Objects.equals(palabras[0], "SELECT")){
+            String dir = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\"
                     + user + "\\" + palabras[1] + ".xml";
 
             tableJSON = read(dir);
 
-
-
         }
-        else if (Objects.equals(palabras[0], "INSERT") && Objects.equals(palabras[1], "INTO")){
-            File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
-            if (xml.exists()) {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-
-                Document document = builder.parse(xml);
-                NodeList nodo_principal = document.getElementsByTagName(palabras[2]);
-
-
-                for (int i = 0; i < nodo_principal.getLength(); i++) {
-                    Node nodo = nodo_principal.item(i);
-                    if (nodo.getNodeType() == Node.ELEMENT_NODE) {
-                        Element element = (Element) nodo;
-                        NodeList hijos = element.getChildNodes();
-                        for (int j = 0; j < hijos.getLength(); j++) {
-                            Node hijo = hijos.item(j);
-                            if (hijo.getNodeType() == Node.ELEMENT_NODE) {
-                                Element eHijo = (Element) hijo;
-                                String[] atributos = palabras[3].split(",");
-                                String[] escritura = palabras[5].split(",");
-                                for (int k = 0; k < atributos.length;k++) {
-                                    if (hijo.getNodeName().equals(atributos[k])) {
-                                        Text valor = document.createTextNode(escritura[k]);
-                                        eHijo.appendChild(valor);
-                                        TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
-                                        Transformer transformer = transformerFactory1.newTransformer();
-                                        Source source = new DOMSource(document);
-                                        FileWriter fw = new FileWriter(xml);
-                                        PrintWriter pw = new PrintWriter(fw);
-                                        Result result = new StreamResult(pw);
-                                        transformer.transform(source, result);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else if(Objects.equals(palabras[0], "UPDATE")){
-            File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[1] + ".xml");
-            if (xml.exists()) {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-
-                Document document = builder.parse(xml);
-                NodeList nodo_principal = document.getElementsByTagName(palabras[1]);
-                String[] atributos = palabras[3].split(",");
-
-                for (int i = 0; i < nodo_principal.getLength(); i++) {
-                    Node nodo = nodo_principal.item(i);
-                    if (nodo.getNodeType() == Node.ELEMENT_NODE) {
-                        Element element = (Element) nodo;
-                        NodeList hijos = element.getChildNodes();
-                        for (int j = 0; j < hijos.getLength(); j++) {
-                            Node hijo = hijos.item(j);
-                            if (hijo.getNodeType() == Node.ELEMENT_NODE) {
-                                Element eHijo = (Element) hijo;
-                                for (int k= 0;k < atributos.length;k++) {
-                                    String[] cambio = atributos[k].split("=");
-                                    if (cambio[0].equals(hijo.getNodeName())) {
-                                        System.out.println(cambio[0] + "," + cambio[1]);
-                                        eHijo.setTextContent(cambio[1]);
-                                        TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
-                                        Transformer transformer = transformerFactory1.newTransformer();
-                                        Source source = new DOMSource(document);
-                                        FileWriter fw = new FileWriter(xml);
-                                        PrintWriter pw = new PrintWriter(fw);
-                                        Result result = new StreamResult(pw);
-                                        transformer.transform(source, result);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else {
-            System.out.println("Comando no encontrado");
-        }
-
-        return new ResponseEntity<TableResponse>(tableJSON,HttpStatus.OK);
-
+        return new ResponseEntity<TableResponse>(tableJSON, HttpStatus.OK);
     }
     //request de query básico
     public static class queryRequest {
@@ -205,6 +56,157 @@ public class queryController {
         }
 
 
+    }
+    @PostMapping("/commit")
+    ResponseEntity<String> commitPost(@RequestBody CommitRequest request) throws IOException, SAXException, ParserConfigurationException, TransformerException {
+        for (int l = 1;l < commit.length;l++) {
+            String[] palabras = commit[l].split(" ");
+            if (Objects.equals(palabras[0], "DELETE")) {
+                if (Objects.equals(palabras[1], "FROM")) {
+                    if (palabras.length >= 4) {
+                        File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
+                        if (xml.exists()) {
+                            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                            DocumentBuilder builder = factory.newDocumentBuilder();
+
+                            Document document = builder.parse(xml);
+                            NodeList nodo_principal = document.getElementsByTagName(palabras[2]);
+
+
+                            for (int i = 0; i < nodo_principal.getLength(); i++) {
+                                Node nodo = nodo_principal.item(i);
+                                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element element = (Element) nodo;
+                                    NodeList hijos = element.getChildNodes();
+                                    for (int j = 0; j < hijos.getLength(); j++) {
+                                        Node hijo = hijos.item(j);
+                                        if (hijo.getNodeType() == Node.ELEMENT_NODE) {
+                                            String[] todo = palabras[4].split(",");
+                                            if (todo.length == 1) {
+                                                if (hijo.getNodeName().equals(todo[0])) {
+                                                    nodo.removeChild(hijo);
+                                                    TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
+                                                    Transformer transformer = transformerFactory1.newTransformer();
+                                                    Source source = new DOMSource(document);
+                                                    FileWriter fw = new FileWriter(xml);
+                                                    PrintWriter pw = new PrintWriter(fw);
+                                                    Result result = new StreamResult(pw);
+                                                    transformer.transform(source, result);
+                                                    SerialReader.success = 3;
+                                                }
+                                            } else {
+                                                for (int k = 0; k < todo.length; k++) {
+                                                    if (hijo.getNodeName().equals(todo[k])) {
+                                                        nodo.removeChild(hijo);
+                                                        TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
+                                                        Transformer transformer = transformerFactory1.newTransformer();
+                                                        Source source = new DOMSource(document);
+                                                        FileWriter fw = new FileWriter(xml);
+                                                        PrintWriter pw = new PrintWriter(fw);
+                                                        Result result = new StreamResult(pw);
+                                                        transformer.transform(source, result);
+                                                        SerialReader.success = 3;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
+                        if (xml.exists()) {
+                            if (xml.delete()) {
+                                SerialReader.success = 3;
+                                System.out.println("Se ha borrado la tabla");
+                            }
+                        } else {
+                            System.out.println("La tabla no existe");
+                        }
+                    }
+                }
+            } else if (Objects.equals(palabras[0], "INSERT") && Objects.equals(palabras[1], "INTO")) {
+                File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
+                if (xml.exists()) {
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+
+                    Document document = builder.parse(xml);
+                    NodeList nodo_principal = document.getElementsByTagName(palabras[2]);
+
+                    for (int i = 0; i < nodo_principal.getLength(); i++) {
+                        Node nodo = nodo_principal.item(i);
+                        if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                            Element element = (Element) nodo;
+                            NodeList hijos = element.getChildNodes();
+                            for (int j = 0; j < hijos.getLength(); j++) {
+                                Node hijo = hijos.item(j);
+                                if (hijo.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element eHijo = (Element) hijo;
+                                    String[] atributos = palabras[3].split(",");
+                                    String[] escritura = palabras[5].split(",");
+                                    for (int k = 0; k < atributos.length; k++) {
+                                        if (hijo.getNodeName().equals(atributos[k])) {
+                                            Text valor = document.createTextNode(escritura[k]);
+                                            eHijo.appendChild(valor);
+                                            TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
+                                            Transformer transformer = transformerFactory1.newTransformer();
+                                            Source source = new DOMSource(document);
+                                            FileWriter fw = new FileWriter(xml);
+                                            PrintWriter pw = new PrintWriter(fw);
+                                            Result result = new StreamResult(pw);
+                                            transformer.transform(source, result);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (Objects.equals(palabras[0], "UPDATE")) {
+                File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[1] + ".xml");
+                if (xml.exists()) {
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+
+                    Document document = builder.parse(xml);
+                    NodeList nodo_principal = document.getElementsByTagName(palabras[1]);
+                    String[] atributos = palabras[3].split(",");
+
+                    for (int i = 0; i < nodo_principal.getLength(); i++) {
+                        Node nodo = nodo_principal.item(i);
+                        if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                            Element element = (Element) nodo;
+                            NodeList hijos = element.getChildNodes();
+                            for (int j = 0; j < hijos.getLength(); j++) {
+                                Node hijo = hijos.item(j);
+                                if (hijo.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element eHijo = (Element) hijo;
+                                    for (int k = 0; k < atributos.length; k++) {
+                                        String[] cambio = atributos[k].split("=");
+                                        if (cambio[0].equals(hijo.getNodeName())) {
+                                            System.out.println(cambio[0] + "," + cambio[1]);
+                                            eHijo.setTextContent(cambio[1]);
+                                            TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
+                                            Transformer transformer = transformerFactory1.newTransformer();
+                                            Source source = new DOMSource(document);
+                                            FileWriter fw = new FileWriter(xml);
+                                            PrintWriter pw = new PrintWriter(fw);
+                                            Result result = new StreamResult(pw);
+                                            transformer.transform(source, result);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                System.out.println("Comando no encontrado");
+            }
+        }
+        return ResponseEntity.ok("Funciono");
     }
     @PostMapping("/create")
     ResponseEntity<String> queryPost(@RequestBody newTableRequest request) throws IOException, ParserConfigurationException, SAXException, TransformerException {
@@ -332,5 +334,13 @@ public class queryController {
         public List<List<String>> getItems() {
             return items;
         }
+    }
+    public static class CommitRequest {
+        private String commit;
+
+        public String getCommit() {
+            return commit;
+        }
+
     }
 }

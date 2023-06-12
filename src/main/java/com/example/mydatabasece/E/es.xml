@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<es>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><es>
     <nombre>
         Victor
     </nombre>
@@ -9,22 +8,10 @@
     <nombre>
         Emilio
     </nombre>
-    <edad>
-        22
-    </edad>
-    <edad>
-        ni idea
-    </edad>
-    <edad>
-        nose
-    </edad>
-    <altura>
-        1.76m
-    </altura>
-    <altura>
-        1.70m
-    </altura>
-    <altura>
-        1.80m
-    </altura>
+    <edad>45</edad>
+    <edad>45</edad>
+    <edad>45</edad>
+    <altura>1.35m</altura>
+    <altura>1.35m</altura>
+    <altura>1.35m</altura>
 </es>

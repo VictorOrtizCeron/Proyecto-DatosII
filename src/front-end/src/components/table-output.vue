@@ -8,7 +8,7 @@
 
     </div>
     <button type="button" class="btn btn-outline-success" @click="sendQuery">Query</button>
-    <button type="button" class="btn btn-outline-danger">Commit</button>
+    <button type="button" class="btn btn-outline-danger" @click = "sendCommit">Commit</button>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -104,7 +104,19 @@ export default {
       ).catch((error) => {
         console.error("Error sending text:", error);
       })
-    }
+    },
+    sendCommit() {
+      axios.post("/api/database/commit", {
+        query: this.query
+      })
+          .then((response) => {
+                alert(response.data);
+              }
+          ).catch((error) => {
+        console.error("Error sending text:", error);
+        // Handle the error if needed
+      });
+    },
   },
 
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Estudiantes>
+    <nombre>
+        Emilio
+    </nombre>
+    <nombre>
+        Victor
+    </nombre>
+    <nombre>
+        Ema
+    </nombre>
+    <edad>
+        85
+    </edad>
+    <edad>
+        2
+    </edad>
+    <edad>
+        95
+    </edad>
+    <carne>
+        2022081320
+    </carne>
+    <carne>
+        2023342143
+    </carne>
+    <carne>
+        199784344
+    </carne>
+
+</Estudiantes>
