@@ -49,7 +49,7 @@
       <table class="table table-bordered">
         <thead>
         <tr >
-          <th v-for="item in newTableColumns" :key="item.id" scope="col">{{item}} </th>
+          <th v-for="item in tableColumns" :key="item.id" scope="col">{{item}} </th>
 
         </tr>
         </thead>
@@ -76,7 +76,8 @@ export default {
       tableData: [],
       query: '',
       newTableName: '',
-      newTableColumns: ''
+      newTableColumns: '',
+      tableColumns:[]
     }
   },
   methods: {
@@ -85,7 +86,7 @@ export default {
         query: this.query
       })
           .then((response) => {
-                this.newTableColumns = response.data.headers;
+                this.tableColumns = response.data.headers;
                 this.tableData = response.data.items;
               }
           ).catch((error) => {
