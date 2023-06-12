@@ -25,7 +25,7 @@ import java.util.Objects;
 public class queryController {
     public static String user;
     @PostMapping("/table")
-    ResponseEntity<String> queryPost(@RequestBody queryRequest request) throws ParserConfigurationException, IOException, SAXException {
+    ResponseEntity<String> queryPost(@RequestBody queryRequest request) throws ParserConfigurationException, IOException, SAXException, TransformerException {
 
         System.out.println(request.getQuery());
 
@@ -70,6 +70,13 @@ public class queryController {
                                 if (hijo.getNodeName().equals(palabras[3])) {
                                     Text valor = document.createTextNode(palabras[5]);
                                     eHijo.appendChild(valor);
+                                    TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
+                                    Transformer transformer = transformerFactory1.newTransformer();
+                                    Source source = new DOMSource(document);
+                                    FileWriter fw = new FileWriter(xml);
+                                    PrintWriter pw = new PrintWriter(fw);
+                                    Result result = new StreamResult(pw);
+                                    transformer.transform(source,result);
                                 }
                             }
                         }
@@ -119,8 +126,8 @@ public class queryController {
             name.appendChild(attribute);
         }
 
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
+        TransformerFactory transformerFactory2 = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory2.newTransformer();
 
         Source source = new DOMSource(doc);
         FileWriter fw = new FileWriter(fil);
