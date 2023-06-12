@@ -30,9 +30,8 @@ public class queryController {
     ResponseEntity<TableResponse> queryPost(@RequestBody queryRequest request) throws ParserConfigurationException, IOException, SAXException, TransformerException {
 
 
-        committ = committ + "," + request.getQuery();
-        commit = committ.split(",");
-        System.out.println(commit[1] + "," + commit[2]);
+        committ = committ + "/" + request.getQuery();
+        commit = committ.split("/");
         List<String> headers = new ArrayList<>();
         List<List<String>> items = new ArrayList<>();
         TableResponse tableJSON = new TableResponse(headers,items);
@@ -61,6 +60,7 @@ public class queryController {
     ResponseEntity<String> commitPost(@RequestBody CommitRequest request) throws IOException, SAXException, ParserConfigurationException, TransformerException {
         for (int l = 1;l < commit.length;l++) {
             String[] palabras = commit[l].split(" ");
+            System.out.println(palabras[3] + "," + palabras[palabras.length - 1]);
             if (Objects.equals(palabras[0], "DELETE")) {
                 if (Objects.equals(palabras[1], "FROM")) {
                     if (palabras.length >= 4) {
@@ -206,6 +206,8 @@ public class queryController {
                 System.out.println("Comando no encontrado");
             }
         }
+        commit = null;
+        committ = "";
         return ResponseEntity.ok("Funciono");
     }
     @PostMapping("/create")
