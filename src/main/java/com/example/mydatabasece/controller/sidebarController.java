@@ -11,10 +11,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/database/sidebar")
 public class sidebarController {
-
+    public static String user;
     @GetMapping("/getInfo")
     ResponseEntity<sidebarInfo> getSidebarInfo(){
 
@@ -23,7 +24,7 @@ public class sidebarController {
         info.xmlStores  = new ArrayList<>();
 
         String folderPath = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\main" +
-                "\\java\\com\\example\\mydatabasece\\E"; // Replace with the path of the folder you want to traverse
+                "\\java\\com\\example\\mydatabasece\\"+ user; // Replace with the path of the folder you want to traverse
         File folder = new File(folderPath);
         File[] files = folder.listFiles();
 

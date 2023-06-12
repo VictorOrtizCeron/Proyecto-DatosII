@@ -41,6 +41,7 @@ public class LoginController {
             SerialReader.success = 1;
             morse = "";
             queryController.user = request.username;
+            sidebarController.user = request.username;
             return ResponseEntity.ok("Funciono");
         }
         else {

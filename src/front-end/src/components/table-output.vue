@@ -48,18 +48,14 @@
       <h5 class="card-title">Tabla de Output</h5>
       <table class="table table-bordered">
         <thead>
-        <tr>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Age</th>
+        <tr >
+          <th v-for="item in newTableColumns" :key="item.id" scope="col">{{item}} </th>
+
         </tr>
         </thead>
         <tbody>
-        <tr v-for="item in tableData" :key="item.id">
-          <td>{{ item.first_name }}</td>
-          <td>{{ item.last_name }}</td>
-          <td>{{ item.age }}</td>
-          <!-- Add more table cells as needed -->
+        <tr v-for= "(row,rowIndex) in tableData.length" :key="rowIndex">
+          <td v-for="(value, colIndex) in tableData" :key="colIndex">{{ value[rowIndex] }}</td><!-- Add more table cells as needed -->
         </tr>
         </tbody>
       </table>
@@ -77,19 +73,7 @@ export default {
   name: 'tableOutput',
   data() {
     return {
-      tableData: [
-        {
-          first_name: 'victor',
-          last_name: 'ortiz',
-          age: '22'
-        },
-        {
-          first_name: 'raul',
-          last_name: 'ortiz',
-          age: '23'
-        },
-
-      ],
+      tableData: [],
       query: '',
       newTableName: '',
       newTableColumns: ''
@@ -101,7 +85,8 @@ export default {
         query: this.query
       })
           .then((response) => {
-                alert(response.data);
+                this.newTableColumns = response.data.headers;
+                this.tableData = response.data.items;
               }
           ).catch((error) => {
         console.error("Error sending text:", error);

@@ -17,8 +17,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 //controlador de queries , aqui llegan las solicitudes de la página principal mediante el método post
 @RestController
@@ -26,10 +25,10 @@ import java.util.Objects;
 public class queryController {
     public static String user;
     @PostMapping("/table")
-    ResponseEntity<String> queryPost(@RequestBody queryRequest request) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+    ResponseEntity<TableResponse> queryPost(@RequestBody queryRequest request) throws ParserConfigurationException, IOException, SAXException, TransformerException {
 
         System.out.println(request.getQuery());
-
+        TableResponse tableJSON = new TableResponse(null,null);
         String[] palabras = request.getQuery().split(" ");
         if (Objects.equals(palabras[0], "DELETE")){
             if (Objects.equals(palabras[1], "FROM")){
@@ -101,6 +100,15 @@ public class queryController {
         }
         else if (Objects.equals(palabras[0], "SELECT")){
             System.out.println("Seleccionado");
+            //String dir = "C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\" +
+           //         "src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[1] + ".xml";
+            String dir = "C:\\Users\\victo\\IdeaProjects\\MyDataBaseCE\\src\\main\\java\\com\\example\\mydatabasece\\"
+                    + user + "\\" + palabras[1] + ".xml";
+
+            tableJSON = read(dir);
+
+
+
         }
         else if (Objects.equals(palabras[0], "INSERT") && Objects.equals(palabras[1], "INTO")){
             File xml = new File("C:\\Users\\manue\\Documents\\Proyecto3-DatosII\\src\\main\\java\\com\\example\\mydatabasece\\" + user + "\\" + palabras[2] + ".xml");
@@ -185,7 +193,7 @@ public class queryController {
             System.out.println("Comando no encontrado");
         }
 
-        return ResponseEntity.ok("Query received in backend");
+        return new ResponseEntity<TableResponse>(tableJSON,HttpStatus.OK);
 
     }
     //request de query básico
@@ -240,7 +248,6 @@ public class queryController {
     //request de creación de nueva base de datos
     public static class newTableRequest {
         private String newTableName;
-
         private String newTableColumns;
 
         public String getNewTableName() {
@@ -251,5 +258,79 @@ public class queryController {
         }
 
 
+    }
+    public TableResponse read(String xmlFilePath){
+        Map<String, List<String>> nodoValorMap = new HashMap<>();
+
+        //List<String> columns = new ArrayList<>();
+        List<List<String>>data = new ArrayList<>();
+        List<String>columns = new ArrayList<>();
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(xmlFilePath);
+
+            NodeList nodeList = document.getDocumentElement().getChildNodes();
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                List<String> tempData = new ArrayList<>();
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) node;
+                    String nombreNodo = element.getNodeName();
+
+                    if (!nodoValorMap.containsKey(nombreNodo)) {
+                        nodoValorMap.put(nombreNodo, new ArrayList<>());
+
+                    }
+
+                    String informacionNodo = element.getTextContent();
+                    nodoValorMap.get(nombreNodo).add(informacionNodo);
+
+                }
+
+            }
+            columns = new ArrayList<>(nodoValorMap.keySet());
+            Collections.reverse(columns);
+            // Imprimir la información de los nodos
+            for (Map.Entry<String, List<String>> entry : nodoValorMap.entrySet()) {
+                String nombreNodo = entry.getKey();
+                List<String> valoresNodo = entry.getValue();
+
+                data.add(valoresNodo);
+
+                System.out.println("Información en " + nombreNodo + ":");
+                for (String valor : valoresNodo) {
+                    System.out.println(valor);
+
+                }
+
+            }
+            Collections.reverse(data);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new TableResponse(columns,data);
+    }
+    public ResponseEntity<TableResponse>sendTable(TableResponse tabla){
+        return new ResponseEntity<>(tabla,HttpStatus.OK);
+    }
+    public static class TableResponse {
+        private List<String> headers;
+        private List<List<String>> items;
+
+        public TableResponse(List<String> headers, List<List<String>> items) {
+            this.headers = headers;
+            this.items = items;
+        }
+
+        public List<String> getHeaders() {
+            return headers;
+        }
+
+        public List<List<String>> getItems() {
+            return items;
+        }
     }
 }
