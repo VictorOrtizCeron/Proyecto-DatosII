@@ -17,6 +17,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Objects;
 
 //controlador de queries , aqui llegan las solicitudes de la página principal mediante el método post
@@ -51,8 +52,8 @@ public class queryController {
                                     Node hijo = hijos.item(j);
                                     if (hijo.getNodeType() == Node.ELEMENT_NODE) {
                                         String[] todo = palabras[4].split(",");
-                                        for (int k = 0; k < todo.length; k++) {
-                                            if (hijo.getNodeName().equals(todo[k])) {
+                                        if (todo.length == 1){
+                                            if (hijo.getNodeName().equals(todo[0])) {
                                                 nodo.removeChild(hijo);
                                                 TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
                                                 Transformer transformer = transformerFactory1.newTransformer();
@@ -61,6 +62,22 @@ public class queryController {
                                                 PrintWriter pw = new PrintWriter(fw);
                                                 Result result = new StreamResult(pw);
                                                 transformer.transform(source, result);
+                                                SerialReader.success = 3;
+                                            }
+                                        }
+                                        else {
+                                            for (int k = 0; k < todo.length; k++) {
+                                                if (hijo.getNodeName().equals(todo[k])) {
+                                                    nodo.removeChild(hijo);
+                                                    TransformerFactory transformerFactory1 = TransformerFactory.newInstance();
+                                                    Transformer transformer = transformerFactory1.newTransformer();
+                                                    Source source = new DOMSource(document);
+                                                    FileWriter fw = new FileWriter(xml);
+                                                    PrintWriter pw = new PrintWriter(fw);
+                                                    Result result = new StreamResult(pw);
+                                                    transformer.transform(source, result);
+                                                    SerialReader.success = 3;
+                                                }
                                             }
                                         }
                                     }
